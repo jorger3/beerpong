@@ -10,7 +10,43 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171110023323) do
+ActiveRecord::Schema.define(version: 20171111012327) do
+
+  create_table "matches", force: :cascade do |t|
+    t.integer "tournament_id"
+    t.integer "winner_one"
+    t.integer "winner_two"
+    t.integer "loser_one"
+    t.integer "loser_two"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["tournament_id"], name: "index_matches_on_tournament_id"
+  end
+
+  create_table "matches_players", force: :cascade do |t|
+    t.integer "match_id"
+    t.integer "player_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["match_id"], name: "index_matches_players_on_match_id"
+    t.index ["player_id"], name: "index_matches_players_on_player_id"
+  end
+
+  create_table "players", force: :cascade do |t|
+    t.string "name"
+    t.integer "wins"
+    t.integer "loses"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "tournaments", force: :cascade do |t|
+    t.string "name"
+    t.string "location"
+    t.integer "season"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false

@@ -1,0 +1,59 @@
+  <div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <h1>
+      Partidos
+    </h1>
+    <div class="row">
+        <div class="col-md-2">
+          <%= render 'shared/messages' %>
+        </div>
+      </div>
+  </section>
+    <!-- Main content -->
+    <section class="content container-fluid">
+      <div class="col-md-6">
+      <div class="box box-default">
+      <!-- /.box-header -->
+        <div class="box-body">
+          <%= form_for @match, url: {action: "create"} do |f| %>
+            <div class="col-md-4">
+            <label>Equipo 1</label><br>
+            <div class="form-group">
+                 <%= select_tag "player_one", options_from_collection_for_select(@players, "id","name"), class: "form-control" %>
+              </div>
+              <!-- select -->
+              <div class="form-group">
+                <%= select_tag "player_two", options_from_collection_for_select(@players, "id","name"), class: "form-control" %>
+              </div>
+              <!-- select -->
+              <label>Equipo 2</label><br>
+              <div class="form-group">
+                <%= select_tag "player_three", options_from_collection_for_select(@players, "id","name"), class: "form-control" %>
+                </div>
+              <!-- select -->
+              <div class="form-group">
+                <%= select_tag "player_four", options_from_collection_for_select(@players, "id","name"), class: "form-control" %>
+              </div>
+              <div class="form-group">
+                <label>Torneo</label><br>
+                <%= select_tag "tournament", options_from_collection_for_select(@tournaments, "id","name"), class: "form-control" %>
+
+              </div>
+              <div class="form-group">
+                <label>Ganador</label><br>
+                <%= f.radio_button "winner_one", 0 %> Equipo 1
+                <br>
+                <%= f.radio_button "winner_one", 1 %> Equipo 2
+
+                </div>
+              <%= f.submit "Crear", class: 'btn btn-primary' %>
+            <% end %>
+          </div>
+      </div>
+      <!-- /.box-body -->
+      </div>
+    </div>
+</section>
+
+</div>

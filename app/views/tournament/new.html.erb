@@ -1,0 +1,46 @@
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper" style="min-height: 495px;">
+  <%= render 'layouts/messages' %>
+  <article>
+<!-- Content Header (Page header) -->
+    <header class="content-header container-fluid">
+      <div class="row">
+        <div class="col-lg-8">
+          <h1 class="content-max-width">Agregar torneo</h1>
+        </div>
+      </div>
+    </header>
+
+    <section class="content container-fluid">
+      <div class=" col-md-6">
+        <div class="box box-primary">
+          <!-- /.box-header -->
+
+          <!-- form start -->
+          <%= form_for @tournament, url: {action: "create"} do |f| %>
+            <div class="box-body">
+              <div class="form-group">
+                <label>Nombre</label>
+                <%= f.text_field :name, class: "form-control" %>
+              </div>
+              <div class="form-group">
+                <label>Lugar</label>
+                <%= f.text_field :location, class: "form-control" %>
+              </div>
+              <div class="form-group">
+                <label>Temporada</label>
+                <%= f.text_field :season, class: "form-control" %>
+              </div>
+              <div class="box-footer">
+                <%= f.submit "Crear", class: 'btn btn-primary' %>
+              </div>
+            </div>
+            <% end %>
+<!-- /.box-body -->
+          </div>
+        </div>
+      </section>
+
+    </article>
+</div>
+<!-- /.content-wrapper -->

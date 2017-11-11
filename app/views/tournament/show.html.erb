@@ -1,0 +1,109 @@
+<div class="content-wrapper">
+  <section class="content-header">
+    <h1>
+      Torneo: <%= @tournament.name %>
+    </h1>
+    <h3>
+      Fecha: <%= @tournament.created_at.strftime('%D') %>
+    </h3>
+
+  </section>
+<!-- Main content -->
+  <section class="content container-fluid">
+    <div class="row">
+      <div class="col-md-2">
+        <div class="box">
+          <div class="box-header">
+            <h3 class="box-title">Jugadores</h3>
+          </div>
+        <!-- /.box-players -->
+          <div class="box-body">
+            <div id="example2_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+              <div class="row">
+                <div class="col-sm-12">
+                </div>
+                <div class="col-sm-12">
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12">
+                  <table id="example2" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
+                    <thead>
+                      <tr role="row">
+                        <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">Nombre</th>
+                        <th class="sorting_asc" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">Victorias</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% @players.each do |player| %>
+                        <tr role="row" class="odd">
+                          <td class=""><%= player.name %></td>
+                          <td class="sorting_1"><%= Match.where(tournament_id: @tournament.id).where(winner_one: player.id).count + Match.where(tournament_id: @tournament.id).where(winner_two: player.id).count %></td>
+                        </tr>
+                      <% end %>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        <!-- /.box-players -->
+      </div>
+    </div>
+      <!-- /.box -->
+  </div>
+      <!-- /.box-body -->
+  <div class="row">
+    <div class="col-md-4">
+      <div class="box">
+        <div class="box-header">
+          <h3 class="box-title">Partidos</h3>
+        </div>
+        <div class="box-body table-responsive no-padding">
+          <table class="table table-hover">
+            <tbody>
+              <tr>
+                <th>Partido</th>
+                <th>Equipo 1</th>
+                <th>Equipo 2</th>
+                <th>Hora</th>
+              </tr>
+              <% @matches.each do |match| %>
+                <tr>
+                  <td><%= match.id %></td>
+                  <% if ((match.winner_one.to_i == match.players.order("matches_players.id ASC").first.id) || (match.winner_two.to_i == match.players.order("matches_players.id ASC").first.id)) %>
+                    <td>
+                      <font color="green">
+                        <%= match.players.order("matches_players.id ASC").first.name %> - <%= match.players.order("matches_players.id ASC").second.name %>
+                      </font>
+                    </td>
+                    <td>
+                      <font color="red">
+                        <%= match.players.order("matches_players.id ASC").third.name %> - <%= match.players.order("matches_players.id ASC").fourth.name %>
+                      </font>      
+                    </td>
+                  <% else ((match.winner_one.to_i == match.players.order("matches_players.id ASC").last.id.to_i) || (match.winner_two.to_i == match.players.order("matches_players.id ASC").last.id.to_i)) %>
+                    <td>
+                      <font color="red">
+                        <%= match.players.order("matches_players.id ASC").first.name %> - <%= match.players.order("matches_players.id ASC").second.name %>
+                      </font>     
+                    </td>
+                    <td>
+                      <font color="green">
+                        <%= match.players.order("matches_players.id ASC").third.name %> - <%= match.players.order("matches_players.id ASC").fourth.name %>
+                      </font>    
+                    </td>
+                  <% end %>
+                  <td>
+                    <%= match.created_at.strftime('%H:%M') %>    
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div><!-- /.box-body -->
+      </div>
+    </div>
+  </div>
+  </section>
+</div>

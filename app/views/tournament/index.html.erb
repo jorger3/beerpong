@@ -1,0 +1,43 @@
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <h1>
+      Torneos
+    </h1>
+  </section>
+    <!-- Main content -->
+  <section class="content container-fluid">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="box">
+          <!-- /.box-header -->
+          <div class="box-body table-responsive no-padding">
+            <table class="table table-hover">
+              <tbody>
+                <tr>
+                  <th>Nombre</th>
+                  <th>Ganador</th>
+                  <th>Lugar</th>
+                  <th>Temporada</th>
+                  <th>Fecha</th>
+                </tr>
+                <% @tournaments.each do |tournament| %>
+                  <% query = "SELECT id FROM matches where tournament_id = #{tournament.id} GROUP BY id ORDER BY COUNT(winner_one)+count(winner_two) DESC LIMIT    1;" %>
+                  <% player_id = ActiveRecord::Base.connection.execute(query) %>
+                  <tr>
+                      <td><a href="/tournament/<%= tournament.id %>"><%= tournament.name %></a></td>
+                      <td><%= @winner %></td>
+                      <td><%= tournament.location %></td>
+                      <td><%= tournament.season %></td>
+                      <td><%= tournament.created_at.strftime("%D") %></td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+          <!-- /.box-body -->
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
