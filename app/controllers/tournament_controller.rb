@@ -3,16 +3,30 @@ class TournamentController < ApplicationController
     @tournaments = Tournament.all
 
     Player.all.each do |p|
-      p.update(points: (Match.where(winner_one: p.id).count + Match.where(winner_two: p.id).count))
+      p.update(wins: (Match.where(winner_one: p.id).count + Match.where(winner_two: p.id).count))
     end
-    @winner = Player.all.order(points: :desc).first.name
 
+
+    @winner = Player.all.order(wins: :desc).first
+
+    if @winner.nil?
+      @winner = "N/A"
+    else
+      @winner = @winner.name
+    end
   end
+
   def new
     @tournament = Tournament.new
   end
   def create
-    @tournament = Tournament.new(name: params[:tournament][:name], location: params[:tournament][:location], season: params[:tournament][:season])
+    same_location = Tournament.where(location: params[:tournament][:location])
+    if same_location.first.nil?
+      @tournament = Tournament.new(name: params[:tournament][:name], location: params[:tournament][:location], season: 0)
+    else
+      season = same_location.last.season+1
+      @tournament = Tournament.new(name: params[:tournament][:name], location: params[:tournament][:location], season: season)
+    end
 
     if @tournament.save!
       flash[:success] = "Torneo Creado"
@@ -30,13 +44,13 @@ class TournamentController < ApplicationController
     ranking = []
 
     @players.each do |p|
- 		ranking << Match.where(tournament_id: @tournament.id).where(winner_one: p.id).count + Match.where(tournament_id: @tournament.id).where(winner_two: p.id).count
- 	end
+      r 
+    end
   end
 
   # private
-  #   def params
-  #     params.require(:tournament).permit(:name, :location, :seaso)
+  #   def tournament_params
+  #     params.require(:tournament).permit(:name, :location)
   #   end
 
   #   def set_tournament

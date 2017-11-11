@@ -3,7 +3,7 @@ class PlayerController < ApplicationController
   	Player.all.each do |p|
   		p.update(points: (Match.where(winner_one: p.id).count + Match.where(winner_two: p.id).count))
   	end
-    @players = Player.all.order(points: :desc)
+    @players = Player.all.order(wins: :desc)
   end
   def new
     @player = Player.new

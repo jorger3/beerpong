@@ -24,7 +24,7 @@
                 <% @players.each do |player| %>
                   <tr>
                     <td><%= player.name %></td>
-                    <td><%= player.points %></td>
+                    <td><%= player.wins %></td>
                     <td><%= Match.where("winner_one = ? OR winner_two = ?", player.id, player.id).last.created_at.strftime("%D") %></td>
                   </tr>
                 <% end %>
