@@ -1,7 +1,7 @@
 class PlayerController < ApplicationController
   def index
   	Player.all.each do |p|
-  		p.update(points: (Match.where(winner_one: p.id).count + Match.where(winner_two: p.id).count))
+  		p.update(wins: (Match.where(winner_one: p.id).count + Match.where(winner_two: p.id).count))
   	end
     @players = Player.all.order(wins: :desc)
   end

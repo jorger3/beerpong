@@ -35,10 +35,10 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <% @players.each do |player| %>
+                      <% @players.each do |p| %>
                         <tr role="row" class="odd">
-                          <td class=""><%= player.name %></td>
-                          <td class="sorting_1"><%= Match.where(tournament_id: @tournament.id).where(winner_one: player.id).count + Match.where(tournament_id: @tournament.id).where(winner_two: player.id).count %></td>
+                          <td class=""><%= p.name %></td>
+                          <td class="sorting_1"><%= Match.where(tournament_id: @tournament.id).where(winner_one: p.id).count + Match.where(tournament_id: @tournament.id).where(winner_two: p.id).count %></td>
                         </tr>
                       <% end %>
                     </tbody>

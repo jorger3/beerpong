@@ -12,10 +12,10 @@
  *
  *= ionics
  *= pace
- *= adminlte
  *= skins/skin-blue
  *= font-awesome
  *= bootstrap
+ *= adminlte        
  *= require_tree .
  *= require_self
  */

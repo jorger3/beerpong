@@ -7,7 +7,9 @@
 
           <li class="header">PARTIDOS</li>
           <!-- Optionally, you can add icons to the links -->
-          <li class="active"><a href="/match/new"><i class="fa fa-link"></i> <span>Nuevo Partido</span></a></li>
+          <% if current_user.access_level > 1 %>
+            <li class="active"><a href="/match/new"><i class="fa fa-link"></i> <span>Nuevo Partido</span></a></li>
+          <% end %>
           <li><a href="/match"><i class="fa fa-link"></i> <span>Partidos</span></a></li>
 
           <li class="header">JUGADORES</li>

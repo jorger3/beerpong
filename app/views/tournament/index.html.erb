@@ -18,7 +18,6 @@
                   <th>Nombre</th>
                   <th>Ganador</th>
                   <th>Lugar</th>
-                  <th>Temporada</th>
                   <th>Fecha</th>
                 </tr>
                 <% @tournaments.each do |tournament| %>
@@ -28,7 +27,6 @@
                       <td><a href="/tournament/<%= tournament.id %>"><%= tournament.name %></a></td>
                       <td><%= @winner %></td>
                       <td><%= tournament.location %></td>
-                      <td><%= tournament.season %></td>
                       <td><%= tournament.created_at.strftime("%D") %></td>
                   </tr>
                 <% end %>

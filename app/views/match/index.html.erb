@@ -55,7 +55,7 @@
                         <%= Tournament.where(id: match.tournament_id).first.name %>
                       </td>
                       <td>
-                        <%= match.created_at %>    
+                        <%= match.created_at.strftime("%D") %>    
                       </td>
                     </tr>
                   <% end %>

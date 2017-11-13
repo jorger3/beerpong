@@ -38,20 +38,21 @@ class TournamentController < ApplicationController
 
   def show
 
+    update_wins()
     @tournament = Tournament.where(id: params[:id]).first
-    @players = Player.all
     @matches = Match.where(tournament_id: params[:id])
-    ranking = []
+    #@players = Player.all
 
-    @players.each do |p|
-      r 
-    end
+    @players = Match.where(tournament_id: params[:id]).first.players
+
   end
 
-  # private
-  #   def tournament_params
-  #     params.require(:tournament).permit(:name, :location)
-  #   end
+   private
+    def update_wins
+      Player.all.each do |p|
+        p.update(wins: (Match.where(winner_one: p.id).count + Match.where(winner_two: p.id).count))
+      end
+    end
 
   #   def set_tournament
   #     @tournament = Tournament.find(params[:id])

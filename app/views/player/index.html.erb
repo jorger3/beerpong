@@ -21,11 +21,16 @@
                 </tr>
               </theader>
               <tbody>
-                <% @players.each do |player| %>
+                <% @players.all.each do |player| %>
                   <tr>
                     <td><%= player.name %></td>
                     <td><%= player.wins %></td>
-                    <td><%= Match.where("winner_one = ? OR winner_two = ?", player.id, player.id).last.created_at.strftime("%D") %></td>
+                    <% last_win = Match.where("winner_one = ? OR winner_two = ?", player.id, player.id).last %>
+                    <% if last_win.nil? %>
+                      <td>N/A</td>
+                    <% else %>
+                      <td><%= last_win.created_at.strftime("%D") %></td>
+                    <% end %>
                   </tr>
                 <% end %>
               </tbody>
