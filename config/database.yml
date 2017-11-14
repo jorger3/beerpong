@@ -9,6 +9,7 @@
 #   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 #   timeout: 5000
 
+
 # development:
 #   <<: *default
 #   database: db/development.sqlite3
@@ -46,7 +47,9 @@ default: &default
 
 development:
   <<: *default
-  database: beerpong_development
+  database: beerpong
+  username: jorge
+  password: 123451
 
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.
@@ -94,7 +97,7 @@ test:
 # On Heroku and other platform providers, you may have a full connection URL
 # available as an environment variable. For example:
 #
-#   DATABASE_URL="postgres://myuser:mypass@localhost/somedatabase"
+   DATABASE_URL="postgres://myuser:mypass@localhost/somedatabase"
 #
 # You can use this database configuration with:
 #
@@ -103,6 +106,5 @@ test:
 #
 production:
   <<: *default
-  database: beerpong_production
-  username: jarpo
-  password: <%= ENV['MYAPP_DATABASE_PASSWORD'] %>
+  database: beerpong
+  url: <%= ENV['DATABASE_URL'] %>

@@ -6,6 +6,9 @@ class ApplicationController < ActionController::Base
 
   def layout_by_resource
     if current_user then
+      if current_user.access_level.nil?
+        current_user.update(access_level: 0)
+      end
     	'application'
     else
 		'login'
