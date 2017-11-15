@@ -12,12 +12,12 @@
   </section>
     <!-- Main content -->
     <section class="content container-fluid">
-      <div class="col-md-6">
+      <div class="col-md-3">
       <div class="box box-default">
       <!-- /.box-header -->
         <div class="box-body">
           <%= form_for @match, url: {action: "create"} do |f| %>
-            <div class="col-md-4">
+            <div class="col-md-10">
             <label>Equipo 1</label><br>
             <div class="form-group">
                  <%= select_tag "player_one", options_from_collection_for_select(@players, "id","name"), class: "form-control" %>

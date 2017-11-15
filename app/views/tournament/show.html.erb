@@ -5,6 +5,8 @@
     </h1>
     <h3>
       Fecha: <%= @tournament.created_at.strftime('%D') %>
+      <br>
+      Creado por: <%= @tournament.user.email %>
     </h3>
 
   </section>
@@ -50,7 +52,6 @@
         <!-- /.box-players -->
       </div>
     </div>
-      <!-- /.box -->
   </div>
       <!-- /.box-body -->
   <div class="row">
@@ -67,6 +68,10 @@
                 <th>Equipo 1</th>
                 <th>Equipo 2</th>
                 <th>Hora</th>
+                <% if @tournament.user.id == current_user.id %>
+                <th>
+                </th>
+                <% end %>
               </tr>
               <% @matches.each do |match| %>
                 <tr>
@@ -97,6 +102,13 @@
                   <td>
                     <%= match.created_at.strftime('%H:%M') %>    
                   </td>
+                  <% if @tournament.user.id == current_user.id %>
+                  <td>
+                   <a href="/match/<%= match.id %>" data-method="delete">
+                    <i class="fa fa-trash" aria-hidden="true"></i>
+                   </a>
+                  </td>
+                  <% end %>
                 </tr>
               <% end %>
             </tbody>

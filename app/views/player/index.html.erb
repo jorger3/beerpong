@@ -17,14 +17,22 @@
                 <tr>
                   <th>Nombre</th>
                   <th>Victorias</th>
+                  <th>Partidos</th>
                   <th>Ultima Victoria</th>
                 </tr>
               </theader>
               <tbody>
                 <% @players.all.each do |player| %>
+                  <% if player.wins.nil? %>
+                    <% player.update(wins: 0) %>
+                  <% end %>
+                  <% if player.loses.nil? %>
+                    <% player.update(loses: 0) %>
+                  <% end %>
                   <tr>
                     <td><%= player.name %></td>
                     <td><%= player.wins %></td>
+                    <td><%= player.wins+player.loses %></td>
                     <% last_win = Match.where("winner_one = ? OR winner_two = ?", player.id, player.id).last %>
                     <% if last_win.nil? %>
                       <td>N/A</td>

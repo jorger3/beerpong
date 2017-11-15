@@ -4,6 +4,7 @@ class Initial < ActiveRecord::Migration[5.1]
       t.string :name
       t.integer :wins
       t.integer :loses
+      t.belongs_to :user, index: true
 
       t.timestamps
     end
@@ -12,6 +13,7 @@ class Initial < ActiveRecord::Migration[5.1]
       t.string :name
       t.string :location
       t.integer :season
+      t.belongs_to :user, index: true
 
       t.timestamps
 
@@ -24,6 +26,7 @@ class Initial < ActiveRecord::Migration[5.1]
       t.integer :winner_two, foreign_key: true
       t.integer :loser_one, foreign_key: true
       t.integer :loser_two, foreign_key: true
+      t.belongs_to :user, index: true
 
       t.timestamps
     end

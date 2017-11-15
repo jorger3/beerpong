@@ -1,4 +1,5 @@
 class PlayerController < ApplicationController
+  before_action :authenticate_user!, except: [:index]
   def index
   	Player.all.each do |p|
   		p.update(wins: (Match.where(winner_one: p.id).count + Match.where(winner_two: p.id).count))
@@ -10,9 +11,11 @@ class PlayerController < ApplicationController
   end
   def create
     @player = Player.new(player_params)
+    @player.update(user_id: current_user.id)
 
     if @player.save
       flash[:success] = "Jugador agregado"
+      BpLog.create(user_id: current_user.id, action: 'create', controller: 'player', data_id: @player.id)
       redirect_to new_player_path
     else
       render :new

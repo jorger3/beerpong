@@ -11,6 +11,7 @@
 // about supported directives.
 //
 //= require jquery
+//= require bootstrap-notify
 //= require bootstrap
 //= require pace
 //= require jquery.slimscroll

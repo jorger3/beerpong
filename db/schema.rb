@@ -10,10 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171111012327) do
+ActiveRecord::Schema.define(version: 20171115033620) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "bp_logs", force: :cascade do |t|
+    t.bigint "user_id"
+    t.string "table"
+    t.integer "data_id"
+    t.string "action"
+    t.string "controller"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_bp_logs_on_user_id"
+  end
 
   create_table "matches", force: :cascade do |t|
     t.bigint "tournament_id"
@@ -21,9 +32,11 @@ ActiveRecord::Schema.define(version: 20171111012327) do
     t.integer "winner_two"
     t.integer "loser_one"
     t.integer "loser_two"
+    t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["tournament_id"], name: "index_matches_on_tournament_id"
+    t.index ["user_id"], name: "index_matches_on_user_id"
   end
 
   create_table "matches_players", force: :cascade do |t|
@@ -39,16 +52,20 @@ ActiveRecord::Schema.define(version: 20171111012327) do
     t.string "name"
     t.integer "wins"
     t.integer "loses"
+    t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_players_on_user_id"
   end
 
   create_table "tournaments", force: :cascade do |t|
     t.string "name"
     t.string "location"
     t.integer "season"
+    t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_tournaments_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|

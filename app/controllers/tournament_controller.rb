@@ -1,4 +1,5 @@
 class TournamentController < ApplicationController
+  before_action :authenticate_user!, except: [:index, :show]
   def index
     @tournaments = Tournament.all
 
@@ -27,9 +28,11 @@ class TournamentController < ApplicationController
       season = same_location.last.season+1
       @tournament = Tournament.new(name: params[:tournament][:name], location: params[:tournament][:location], season: season)
     end
+    @tournament.update(user_id: current_user.id)
 
     if @tournament.save!
       flash[:success] = "Torneo Creado"
+      BpLog.create(user_id: current_user.id, action: 'create', controller: 'tournament', data_id: @tournament.id)
       redirect_to new_tournament_path
     else
       render :new
@@ -41,10 +44,15 @@ class TournamentController < ApplicationController
     update_wins()
     @tournament = Tournament.where(id: params[:id]).first
     @matches = Match.where(tournament_id: params[:id])
-    #@players = Player.all
+    @match = Match.new
 
-    @players = Match.where(tournament_id: params[:id]).first.players
+    @players = Match.where(tournament_id: params[:id]).first
 
+    if @players.nil?
+      @players = []
+    else
+      @players = @players.players
+    end
   end
 
    private

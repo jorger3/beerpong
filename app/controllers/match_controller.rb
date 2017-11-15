@@ -1,9 +1,11 @@
 class MatchController < ApplicationController
+  before_action :authenticate_user!, except: [:index, :show]
+
   def new
     @match = Match.new
     @players = Player.all
     @matches = Match.all
-    @tournaments = Tournament.all
+    @tournaments = Tournament.where(user_id: current_user.id)
 
 
   end
@@ -48,14 +50,28 @@ class MatchController < ApplicationController
         @match.update(loser_one: @player_one.id)
         @match.update(loser_two: @player_two.id)
     end
+    @match.update(user_id: current_user.id)
 
-    if @match.save
+    if @match.save!
       flash[:success] = "Partido agregado"
+      BpLog.create(user_id: current_user.id, action: 'create', controller: 'match', data_id: @match.id)
       redirect_to new_match_path
     else
       render :new
     end
   end
+
+  def destroy
+    @match = Match.find(params[:id])
+    if @match.destroy!
+      
+      BpLog.create(user_id: current_user.id, action: 'destroy', controller: 'match', data_id: @match.id)
+      redirect_to tournament_path(id: @match.tournament_id)
+      flash[:success] = "Partido Borrado"
+    end
+  
+  end
+
 
   private
     def match_params
