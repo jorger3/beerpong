@@ -3,10 +3,6 @@ class TournamentController < ApplicationController
   def index
     @tournaments = Tournament.all
 
-    Player.all.each do |p|
-      p.update(wins: (Match.where(winner_one: p.id).count + Match.where(winner_two: p.id).count))
-    end
-
 
     @winner = Player.all.order(wins: :desc).first
 

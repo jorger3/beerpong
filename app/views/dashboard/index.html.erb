@@ -10,86 +10,53 @@
 
 	<!-- Main content -->
 	<section class="content">
-	<div class="row">
-		<div class="col-lg-2 col-xs-6">
-		<!-- small box -->
-			<% @tournaments.each do |t| %>
-				<div class="small-box bg-green">
-					<div class="inner">
-						<h3><%= @matches.where(tournament_id: t.id).count %><h6>Partidos</h6></h3>
-						<p></p>
-						<p><b><%= t.name %> - <%= t.location %></b></p>
+		<div class="row">
+			<div class="col-lg-2 col-xs-6">
+			<!-- small box -->
+				<% @tournaments.each do |t| %>
+					<div class="small-box bg-green">
+						<div class="inner">
+							<h3><%= @matches.where(tournament_id: t.id).count %><h6>Partidos</h6></h3>
+							<p></p>
+							<p><b><%= t.name %> - <%= t.location %></b></p>
+						</div>
+						<div class="icon">
+							<i class="ion ion-trophy"></i>
+						</div>
+						<a href="/tournament/<%= t.id %>" class="small-box-footer">
+							ver mas <i class="fa fa-arrow-circle-right"></i>
+						</a>
 					</div>
-					<div class="icon">
-						<i class="ion ion-trophy"></i>
-					</div>
-					<a href="/tournament/<%= t.id %>" class="small-box-footer">
-						ver mas <i class="fa fa-arrow-circle-right"></i>
-					</a>
-				</div>
-			<% end %>
+				<% end %>
+			</div>
 		</div>
-	</div>
+		<div class="col-sm-12 col-md-6">
+			<div class="box box-solid">
+				<div class="box-body">
+					<h4 style="background-color:#f7f7f7; font-size: 18px; text-align: left; padding: 7px 10px; margin-top: 0;">
+						Como Funciona?
+					</h4>
+					<div class="media">
+						<div class="media-left">
+						</div>
+						<div class="media-body">
+							<div class="clearfix">
+								<a href="/users/sign_in"><h4 style="margin-top: 0">1. Iniciar sesion</h4></a>
+								<p>Debes iniciar sesion para poder crear partidos, torneos y jugsdores. </p>
+								<h4 style="margin-top: 0">2. Crear torneo y jugadores</h4>
 
-		<div class="row docs-premium-template">
-						<div class="col-sm-12 col-md-6">
-                <div class="box box-solid">
-                    <div class="box-body">
-										<div class="col-lg-4 col-xs-6">
-										<!-- small box -->
-											<div class="small-box bg-green">
-												<div class="inner">
-													<h3><%= @matches %></h3>
+								<p>Crearlos primero para poder agregar partidos.</p>
+								<h4 style="margin-top: 0">3. Agregar partidos</h4>
 
-													<p>Partidos</p>
-												</div>
-												<div class="icon">
-													<i class="ion ion-stats-bars"></i>
-												</div>
-												<a href="#" class="small-box-footer">
-													More info <i class="fa fa-arrow-circle-right"></i>
-												</a>
-											</div>
-										</div>
-										<div class="col-md-3">
-											<button type="button" class="btn btn-block btn-primary">Partidos</button>
-										</div>
-                    <div class="col-md-3">
-											<a href="/player">
-											<button type="button" class="btn btn-block btn-primary">Jugadores</button>
-											</a>
-										</div>    
-                    </div>
-                </div>
-            </div>
-						<div class="col-sm-12 col-md-6">
-                <div class="box box-solid">
-                    <div class="box-body">
-                        <h4 style="background-color:#f7f7f7; font-size: 18px; text-align: left; padding: 7px 10px; margin-top: 0;">
-                            Como Funciona?
-                        </h4>
-                        <div class="media">
-                            <div class="media-left">
-                            </div>
-                            <div class="media-body">
-                                <div class="clearfix">
-                                    <a href="/users/sign_in"><h4 style="margin-top: 0">1. Iniciar sesion</h4></a>
-
-                                    <p>Debes iniciar sesion para poder crear partidos, torneos y jugsdores. </p>
-																		<h4 style="margin-top: 0">2. Crear torneo y jugadores</h4>
-
-                                    <p>Crearlos primero para poder agregar partidos.</p>
-																		<h4 style="margin-top: 0">3. Agregar partidos</h4>
-
-                                    <p>Elegir jugadores, torneo y el equipo ganador.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            </div>	
-			</section>
+								<p>Elegir jugadores, torneo y el equipo ganador.</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>	
+	</section>
 	<!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
