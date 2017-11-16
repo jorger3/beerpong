@@ -37,7 +37,7 @@
                     <% if last_win.nil? %>
                       <td>N/A</td>
                     <% else %>
-                      <td><%= last_win.created_at.strftime("%D") %></td>
+                      <td><%= last_win.created_at.strftime("%d/%m/%Y") %></td>
                     <% end %>
                   </tr>
                 <% end %>

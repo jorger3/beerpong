@@ -5,8 +5,7 @@ class MatchController < ApplicationController
     @match = Match.new
     @players = Player.all
     @matches = Match.all
-    @tournaments = Tournament.where(user_id: current_user.id)
-
+    @tournaments = Tournament.where(user_id: current_user.id, finished: false).order("id DESC")
 
   end
 

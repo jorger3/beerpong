@@ -7,6 +7,9 @@
       Fecha: <%= @tournament.created_at.strftime('%D') %>
       <br>
       Creado por: <%= @tournament.user.email %>
+      <% if @tournament.user.id == current_user.id && @tournament.finished == true %>
+            <%= button_to 'Revivir torneo', "/tournament/#{params[:id]}/finished/false",class: "btn btn-danger", method: :post %>
+        <% end %>
     </h3>
 
   </section>
@@ -51,6 +54,47 @@
           </div>
         <!-- /.box-players -->
       </div>
+    </div>
+    <div class="col-md-2">
+    <% if @tournament.finished == true %>
+      <div class="info-box">
+        <span class="info-box-icon bg-green">1º</span>
+
+        <div class="info-box-content">
+          <span class="info-box-title"><h4><%= @winner.first.nil? ? 'N/A' : @winner.first.name %></h4></span>
+          <span class="info-box-number"><%= @winner.first.nil? ? '0' : @winner.first.wins %> victorias</span>
+        </div>
+        <!-- /.info-box-content -->
+      </div>
+      <div class="info-box">
+        <span class="info-box-icon bg-green">2º</span>
+
+        <div class="info-box-content">
+          <span class="info-box-title"><h4><%= @winner.second.nil? ? 'N/A' : @winner.second.name %></h4></span>
+          <span class="info-box-number"><%= @winner.second.nil? ? '0' : @winner.second.wins %> victorias</span>
+        </div>
+        
+        <!-- /.info-box-content -->
+      </div>
+      <div class="info-box">
+        <span class="info-box-icon bg-green">3º</span>
+
+        <div class="info-box-content">
+          <span class="info-box-title"><h4><%= @winner.third.nil? ? 'N/A' : @winner.third.name %></h4></span>
+          <span class="info-box-number"><%= @winner.third.nil? ? '0' : @winner.third.wins %> victorias</span>
+        </div>
+        
+        <!-- /.info-box-content -->
+      </div>
+    <% else %>
+      <% if @tournament.user.id == current_user.id %>
+        <% if @tournament.finished == false %>
+            <%= button_to 'Terminar torneo', "/tournament/#{params[:id]}/finished/true",class: "btn btn-danger", method: :post %>
+          <% else %>
+            <%= button_to 'Terminar torneo', "/tournament/#{params[:id]}/finished/false",class: "btn btn-danger", method: :post %>
+        <% end %>
+      <% end %>
+    <% end %>
     </div>
   </div>
       <!-- /.box-body -->

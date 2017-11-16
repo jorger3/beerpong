@@ -23,17 +23,17 @@ class TournamentController < ApplicationController
   def create
     same_location = Tournament.where(location: params[:tournament][:location])
     if same_location.first.nil?
-      @tournament = Tournament.new(name: params[:tournament][:name], location: params[:tournament][:location], season: 0)
+      @tournament = Tournament.new(name: params[:tournament][:name], location: params[:tournament][:location], season: 0, finished: false, user_id: current_user.id)
     else
       season = same_location.last.season+1
-      @tournament = Tournament.new(name: params[:tournament][:name], location: params[:tournament][:location], season: season)
+      @tournament = Tournament.new(name: params[:tournament][:name], location: params[:tournament][:location], season: season, finished: false, user_id: current_user.id)
     end
-    @tournament.update(user_id: current_user.id)
+    
 
     if @tournament.save!
       flash[:success] = "Torneo Creado"
       BpLog.create(user_id: current_user.id, action: 'create', controller: 'tournament', data_id: @tournament.id)
-      redirect_to new_tournament_path
+      redirect_to tournament_path
     else
       render :new
     end
@@ -41,25 +41,51 @@ class TournamentController < ApplicationController
 
   def show
 
-    update_wins()
+    
     @tournament = Tournament.where(id: params[:id]).first
-    @matches = Match.where(tournament_id: params[:id])
-    @match = Match.new
 
-    @players = Match.where(tournament_id: params[:id]).first
+    @players = []
+    @matches = Match.where(tournament_id: params[:id])
+
+    @matches.each do |match|
+      match.players.each do |player|
+        @players << player
+      end
+    end
+    #puts @players
+
+    
 
     if @players.nil?
-      @players = []
+      @winner = []
     else
-      @players = @players.players
+      @winner = @players.sort_by{ |t| -t.wins }
     end
   end
 
-   private
-    def update_wins
-      Player.all.each do |p|
-        p.update(wins: (Match.where(winner_one: p.id).count + Match.where(winner_two: p.id).count))
+  def finished
+    tournament = Tournament.find(params[:id])
+    if tournament.update!(finished: params[:finished])
+      if params[:finished] == true
+        flash[:success] = "Torneo terminado"
+        BpLog.create(user_id: current_user.id, action: 'finished', controller: 'tournament', data_id: tournament.id)
+      else
+        flash[:danger] = "Torneo NO terminado"
+        BpLog.create(user_id: current_user.id, action: 'unfinished', controller: 'tournament', data_id: tournament.id)
       end
+      redirect_to tournament_path(params[:id])
+    else
+      render :new
+    end
+
+  end
+
+   private
+    def update_wins(id)
+      @players.each do |p|
+        p.wins(wins: (Match.where(winner_one: p.id, tournament_id: id).count + Match.where(winner_two: p.id, tournament_id: id).count))
+      end
+      return @players
     end
 
   #   def set_tournament
