@@ -13,21 +13,23 @@
 		<div class="row">
 			<div class="col-lg-2 col-xs-6">
 			<!-- small box -->
-				<% @tournaments.each do |t| %>
-					<div class="small-box bg-green">
-						<div class="inner">
-							<h3><%= @matches.where(tournament_id: t.id).count %><h6>Partidos</h6></h3>
-							<p></p>
-							<p><b><%= t.name %> - <%= t.location %></b></p>
+				<% if !@tournaments.nil? %>
+					<% @tournaments.each do |t| %>
+						<div class="small-box bg-green">
+							<div class="inner">
+								<h3><%= @matches.where(tournament_id: t.id).count %><h6>Partidos</h6></h3>
+								<p></p>
+								<p><b><%= t.name %> - <%= t.location %></b></p>
+							</div>
+								<div class="icon">
+								<i class="ion ion-trophy"></i>
+							</div>
+							<a href="/tournament/<%= t.id %>" class="small-box-footer">
+								ver mas <i class="fa fa-arrow-circle-right"></i>
+							</a>
 						</div>
-						<div class="icon">
-							<i class="ion ion-trophy"></i>
-						</div>
-						<a href="/tournament/<%= t.id %>" class="small-box-footer">
-							ver mas <i class="fa fa-arrow-circle-right"></i>
-						</a>
-					</div>
-				<% end %>
+					<% end %>
+					<% end %>
 			</div>
 		</div>
 		<div class="col-sm-12 col-md-6">
