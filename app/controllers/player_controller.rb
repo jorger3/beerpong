@@ -10,10 +10,10 @@ class PlayerController < ApplicationController
     @player = Player.new
   end
   def create
-    @player = Player.new(player_params)
+    @player = Player.new(name: params[:name])
     @player.update(user_id: current_user.id)
 
-    if @player.save
+    if @player.save!
       flash[:success] = "Jugador agregado"
       BpLog.create(user_id: current_user.id, action: 'create', controller: 'player', data_id: @player.id)
       redirect_to new_player_path
@@ -21,10 +21,5 @@ class PlayerController < ApplicationController
       render :new
     end
   end
-
-  private
-    def player_params
-      params.require(:player).permit(:name)
-    end
 
 end
