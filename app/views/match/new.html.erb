@@ -20,24 +20,24 @@
             <div class="col-md-10">
             <label>Equipo 1</label><br>
             <div class="form-group">
-                 <%= select_tag "player_one", options_from_collection_for_select(@players, "id","name"), class: "form-control" %>
+                 <%= select_tag "player_one", options_from_collection_for_select(@players, "id","name", {:selected => @players.first.id}), class: "form-control" %>
               </div>
               <!-- select -->
               <div class="form-group">
-                <%= select_tag "player_two", options_from_collection_for_select(@players, "id","name"), class: "form-control" %>
+                <%= select_tag "player_two", options_from_collection_for_select(@players, "id","name", {:selected => @players.second.id}), class: "form-control" %>
               </div>
               <!-- select -->
               <label>Equipo 2</label><br>
               <div class="form-group">
-                <%= select_tag "player_three", options_from_collection_for_select(@players, "id","name"), class: "form-control" %>
+                <%= select_tag "player_three", options_from_collection_for_select(@players, "id","name", {:selected => @players.third.id}), class: "form-control" %>
                 </div>
               <!-- select -->
               <div class="form-group">
-                <%= select_tag "player_four", options_from_collection_for_select(@players, "id","name"), class: "form-control" %>
+                <%= select_tag "player_four", options_from_collection_for_select(@players, "id","name", {:selected => @players.fourth.id}), class: "form-control" %>
               </div>
               <div class="form-group">
                 <label>Torneo</label><br>
-                <%= select_tag "tournament", options_from_collection_for_select(@tournaments, "id","name"), class: "form-control" %>
+                <%= select_tag "tournament", options_from_collection_for_select(@tournaments, "id","name", {:selected => @tournaments.where(finished: false).last.id}), class: "form-control" %>
 
               </div>
               <div class="form-group">
