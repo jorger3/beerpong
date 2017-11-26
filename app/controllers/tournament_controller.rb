@@ -45,7 +45,9 @@ class TournamentController < ApplicationController
 
     @matches.each do |match|
       match.players.each do |player|
-        @players << player
+        if !(@players.include? player)
+          @players << player
+        end
       end
     end
     #puts @players
