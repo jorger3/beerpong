@@ -29,7 +29,7 @@ class TournamentController < ApplicationController
     if @tournament.save!
       flash[:success] = "Torneo Creado"
       BpLog.create(user_id: current_user.id, action: 'create', controller: 'tournament', data_id: @tournament.id)
-      redirect_to tournament_path
+      redirect_to tournament_path(@tournament.id)
     else
       render :new
     end
